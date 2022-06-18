@@ -2,7 +2,8 @@ class WordFilter
 {
     String[] word;
     Map<List<String>,Integer> map=new HashMap<>();
-    public WordFilter(String[] words) 
+    
+    public WordFilter(String[] words)
     {
         word=words;
     }
@@ -11,23 +12,23 @@ class WordFilter
     {
         List<String> list=new ArrayList<>();
         list.add(pre);list.add(suff);
+        
+        //implemented dp
         if(map.containsKey(list))
             return map.get(list);
-        char p=pre.charAt(0),s=suff.charAt(suff.length()-1);
         
         int ans=-1;
         
         for(int i=word.length-1;i>=0;i--)
         {
             String str=word[i];
+            boolean flag=true;
             
+            //if prefix or suffix is longer than str
              if(pre.length()>str.length() || suff.length()>str.length())
                  continue;
-            
-            char st=str.charAt(0);
-            char en=str.charAt(str.length()-1);
-            boolean flag=true;
         
+            //to check prefix
             for(int j=0;j<pre.length();j++)
             {
                 if(pre.charAt(j)!=str.charAt(j))
@@ -37,6 +38,7 @@ class WordFilter
                 }
             }
 
+            //to check suffix 
             for(int j=suff.length()-1,k=str.length()-1;j>=0 && flag;)
             {
                 if(suff.charAt(j--)!=str.charAt(k--))
@@ -45,6 +47,8 @@ class WordFilter
                     break;
                 }
             }
+            
+            
              if(flag)
              {
                map.put(list,i);
