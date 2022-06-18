@@ -1,7 +1,7 @@
 class WordFilter 
 {
     String[] word;
-    Map<List<String>,Integer> map=new HashMap<>();
+    Map<String,Integer> map=new HashMap<>();
     
     public WordFilter(String[] words)
     {
@@ -10,9 +10,8 @@ class WordFilter
     
     public int f(String pre, String suff)
     {
-        List<String> list=new ArrayList<>();
-        list.add(pre);list.add(suff);
         
+        String list=pre+"@"+suff;
         //implemented dp
         if(map.containsKey(list))
             return map.get(list);
