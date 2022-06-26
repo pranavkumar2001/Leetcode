@@ -1,82 +1,62 @@
-class Solution 
-{
-    public List<List<String>> solveNQueens(int n) 
-    {
-        List<List<String>> ans=new ArrayList<>();
-        int[][] list=new int[n][n];
-        List<Integer> index=new ArrayList<>();
-        nQueen(n,0,list,ans,index);
+class Solution {
+    public List<List<String>> solveNQueens(int n) {
+        List<List<String>> ans = new ArrayList<>();
+        boolean[][] chess = new boolean[n][n];
+        queens(ans,chess,0);
         return ans;
     }
-    
-    public void nQueen(int n,int r,int[][] list,List<List<String>> ans,List<Integer> index)
-    {
-        if(r==n)
-        {
-            List<String> comb=new ArrayList<>();
-            for(int x:index)
-            {
-                String str="";
-                for(int i=0;i<n;i++)
-                {
-                    if(i==x)
-                        str+="Q";
-                    else
-                        str+=".";
-                }
-                comb.add(str);
-            }
-            ans.add(comb);
+    public void queens(List<List<String>> ans, boolean[][] chess, int row){
+        if(row == chess.length){
+            add(ans,chess);
             return;
         }
-        
-        for(int c=0;c<n;c++)
-        {
-            if(isValid(list,r,c,n))
-            {
-                //do
-                 list[r][c]=1;
-                 index.add(c);
-                //recur
-                nQueen(n,r+1,list,ans,index);
-                
-                //undo
-                list[r][c]=0;
-                index.remove(new Integer(c));
+        for(int i = 0; i < chess[0].length ; i++){
+            if(isSafe(row,i,chess)){
+                chess[row][i] = true;
+                queens(ans,chess,row+1);
+                chess[row][i] = false;
             }
         }
     }
-    
-    public boolean isValid(int[][] list,int r,int c,int n)
-    {
-        for(int i=0;i<r;i++)
-        {
-            if(list[i][c]==1)
+    public boolean isSafe(int x,int y, boolean[][] chess){
+        //column
+        for(int i = x; i >=0; i--){
+            if(chess[i][y]){
                 return false;
+            }
         }
-        
-        int row=r;int col=c;
-        while(row>=0 && col>=0)
-        {
-            int val=list[row][col];
-            if(val==1)
+        //left diagnol
+        int moves = Math.min(x,y);
+        for(int i = 1; i <= moves; i++){
+            if(chess[x-i][y-i]){
                 return false;
-            row--;
-            col--;
+            }
         }
-        
-        row=r;col=c;
-            
-        while(row>=0 && col<n)
-        {
-            int val=list[row][col];
-            if(val==1)
+        //right diagnol
+        moves = Math.min(x,chess[0].length - y - 1);
+        for(int i = 1; i <= moves; i++){
+            if(chess[x-i][y+i]){
                 return false;
-            row--;
-            col++;
+            }
         }
-        
         return true;
-        
+    }
+    public void add(List<List<String>> ans, boolean[][] chess){
+        List<String> posAns = new ArrayList<>();
+        String s = "";
+        for(int i = 0; i < chess.length; i++){
+            for(int j = 0; j < chess[0].length; j++){
+                if(chess[i][j]){
+                    s+="Q";
+                }
+                else{
+                    s+=".";
+                }
+            }
+            posAns.add(s);
+            s="";
+        }
+        ans.add(posAns);
+        return;
     }
 }
