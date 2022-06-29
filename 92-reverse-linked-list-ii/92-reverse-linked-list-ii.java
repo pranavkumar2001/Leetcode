@@ -14,33 +14,45 @@ class Solution
     {
        if(left==right)
            return head;
-       ListNode prev=null,stprev=null,lfnd=null,fast,node=head,last=null;
+        
+       ListNode prev=null,prevstor=null,first=null,fast,node=head,last=null;
        int pos=1;
        boolean run=true,flag=false;
+       //run to check if last has come or not
+       //flag to check if first has come or not
        while(run)
        {
            fast=node.next;
+           
            if(pos==left)
            {
-               stprev=prev;
-               lfnd=node;
+               prevstor=prev;
+               first=node;
                flag=true;
            }
+           
            if(pos==right)
            {
-               if(stprev!=null)
-                   stprev.next=node;
-               lfnd.next=node.next;
+               //point prev to first node to last node
+               if(prevstor!=null) //to check if first is the starting node or not
+                   prevstor.next=node;
+               //point first node to next to last node.
+               first.next=node.next;
+               
                run=false;
                last=node;
            }
+           
+           //reversal part
            if(flag)
                node.next=prev;
+           
            prev=node;
            node=fast;
            pos++;
        }
-       if(stprev==null)
+       //if starting node is first(pointer)
+       if(prevstor==null)
            head=last;
         return head;
     }
