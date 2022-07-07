@@ -16,11 +16,19 @@ class Solution
         ListNode t2=reverse(l2);
         int carry=0;
         ListNode ans=null,head=null;
-        while(t1!=null && t2!=null)
+        while(t1!=null || t2!=null || carry>0)
         {
             ListNode temp=new ListNode(0);
-            int v=t1.val+t2.val+carry;
-             temp.val=v%10;
+            int v=0;
+            if(t1!=null && t2!=null)
+              v=t1.val+t2.val+carry;
+            else if(t1!=null)
+              v=t1.val+carry;
+            else if(t2!=null)
+              v=t2.val+carry;
+            else if(carry>0)
+              v=carry;
+            temp.val=v%10;
             carry=v/10;
             if(ans!=null)
             {
@@ -32,39 +40,12 @@ class Solution
                 ans=temp;
                 head=temp;
             }
-            t1=t1.next;t2=t2.next;
+            if(t1!=null)
+             t1=t1.next;
+            if(t2!=null)
+             t2=t2.next;
         }
-        while(t1!=null)
-        {
-            ListNode temp=new ListNode(0);
-            int v=t1.val+carry;
-            temp.val=v%10;
-            carry=v/10;
-            ans.next=temp;
-            ans=ans.next;
-            t1=t1.next;
-            
-        }
-        while(t2!=null)
-        {
-            ListNode temp=new ListNode(0);
-            int v=t2.val+carry;
-            temp.val=v%10;
-            carry=v/10;
-            ans.next=temp;
-            ans=ans.next;
-            t2=t2.next;
-            
-        }
-        while(carry>0)
-        {
-            ListNode temp=new ListNode(0);
-            int v=carry;
-            temp.val=v%10;
-            carry=v/10;
-            ans.next=temp;
-            ans=ans.next;
-        }
+
         return reverse(head);
     }
     
