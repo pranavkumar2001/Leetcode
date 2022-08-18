@@ -10,29 +10,15 @@ class Solution
         for(int i=0;i<ar.length;i++)
             ar[i]=arr[i];
         
-        Arrays.sort(ar,new Comparator<>(){
-            public int compare(Integer a,Integer b)
-            {
-                if(map.get(a)!=map.get(b))
-                    return map.get(b)-map.get(a);
-                return a-b;
-            }
-        });
-        
-        // System.out.println("l "+ar.length);
-        // for(int x:ar)
-        //     System.out.println(x);
+        Arrays.sort(ar,(a,b)->map.get(b)-map.get(a));
         
         int h=arr.length/2;
         int t=0,c=0;
-        for(int x:ar)
+        for(int i=0;i<ar.length;)
         {
-            c+=map.get(x);
-            if(map.get(x)!=0)
-              t++;
-            map.put(x,0);
-            // System.out.println("c "+c);
-            // System.out.println("t "+t);
+            c+=map.get(ar[i]);
+            t++;
+            i+=map.get(ar[i]);
             if(c>=h)
                 break;
         }
