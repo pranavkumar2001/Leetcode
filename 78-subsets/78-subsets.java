@@ -3,26 +3,21 @@ class Solution {
     {
         List<List<Integer>> list=new ArrayList<>();
         int n=nums.length;
-        for(int i=0;i<n+1;i++)
-        {
-            backtrack(0,list,new ArrayList<>(),nums,i);
-        }
+        backtrack(0,list,new ArrayList<>(),nums);
         return list;
     }
     
-    public void backtrack(int f,List<List<Integer>> list,List<Integer> temp,int[] nums,int size)
+    public void backtrack(int i,List<List<Integer>> list,List<Integer> temp,int[] nums)
     {
-        if(temp.size()==size)
+        if(i==nums.length)
         {
             list.add(new ArrayList(temp));
             return;
         }
         
-        for(int i=f;i<nums.length;i++)
-        {
-            temp.add(nums[i]);
-            backtrack(i+1,list,temp,nums,size);
-            temp.remove(temp.size()-1);
-        }
+        temp.add(nums[i]);
+        backtrack(i+1,list,temp,nums);
+        temp.remove(temp.size()-1);
+        backtrack(i+1,list,temp,nums);
     }
 }
