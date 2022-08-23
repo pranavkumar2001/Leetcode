@@ -2,27 +2,24 @@ class Solution
 {
     public List<List<Integer>> combine(int n, int k) 
     {
-        List<Integer> list=new ArrayList<>();
-        List<List<Integer>> ans=new ArrayList<>();
-        allComb(n,k,list,ans,1);
-        return ans;
+        List<List<Integer>> list=new ArrayList<>();
+        AllComb(1,n,k,new ArrayList<Integer>(),list);
+        return list;
     }
     
-    public void allComb(int n,int k,List<Integer> list,List<List<Integer>> ans,int x)
+    public void AllComb(int start,int n,int k,List<Integer> temp,List<List<Integer>> list)
     {
-        if(list.size()==k)
+        if(temp.size()==k)
         {
-            ans.add(new ArrayList<Integer>(list));
+            list.add(new ArrayList<Integer>(temp));
             return;
         }
         
-        for(int i=x;i<=n;i++)
+        for(int i=start;i<=n;i++)
         {
-            list.add(i);
-            
-            allComb(n,k,list,ans,i+1);
-            
-            list.remove(list.size()-1);
+            temp.add(i);
+            AllComb(i+1,n,k,temp,list);
+            temp.remove(temp.size()-1);
         }
     }
 }
