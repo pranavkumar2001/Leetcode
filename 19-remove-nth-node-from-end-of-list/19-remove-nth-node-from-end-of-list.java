@@ -12,38 +12,18 @@ class Solution
 {
     public ListNode removeNthFromEnd(ListNode head, int n) 
     {
-        head=reverse(head);
-        if(n==1)
-            head=head.next;
-        else
+        if(head.next==null)
+            return null;
+        ListNode slow=head,fast=head;
+        while(n-->0)
+            fast=fast.next;
+        if (fast == null) return head.next;
+        while(fast.next!=null)
         {
-             ListNode curr=head;
-            int c=0;
-            while(curr!=null)
-            {
-                c++;
-                if(c+1==n)
-                    curr.next=curr.next.next;
-                curr=curr.next;
-            }
+            fast=fast.next;
+            slow=slow.next;
         }
-        head=reverse(head);
-        return head;
-    }
-    
-    public ListNode reverse(ListNode head)
-    {
-        if(head==null)
-            return head;
-        ListNode curr=head,fast=head,prev=null;
-        while(fast!=null)
-        {
-            fast=curr.next;
-            curr.next=prev;
-            prev=curr;
-            curr=fast;
-        }
-        head=prev;
+        slow.next=slow.next.next;
         return head;
     }
 }
