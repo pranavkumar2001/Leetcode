@@ -18,10 +18,14 @@ class Solution {
     public void reflect(int[][] matrix) {
         int n = matrix.length;
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n / 2; j++) {
-                int tmp = matrix[i][j];
-                matrix[i][j] = matrix[i][n - j - 1];
-                matrix[i][n - j - 1] = tmp;
+            //rotate each row;
+            int l=0,r=matrix[0].length-1,tmp=0;
+            while(l<=r)
+            {
+                tmp = matrix[i][l];
+                matrix[i][l] = matrix[i][r];
+                matrix[i][r] = tmp;
+                l++;r--;
             }
         }
     }
