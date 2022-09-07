@@ -5,7 +5,8 @@ class Solution
         int m=0,n=mat[0].length-1;
         while(mat[m][n]<tar && m<=mat.length-2)
             m++;
-        return binarySearch(mat,m,0,n,tar);
+        // return binarySearch(mat,m,0,n,tar);
+        return Arrays.binarySearch(mat[m],tar)>=0;
     }
     
     public boolean binarySearch(int[][] mat,int r,int l,int h,int tar)
