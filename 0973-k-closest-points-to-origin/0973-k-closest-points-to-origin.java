@@ -6,8 +6,8 @@ class Solution
         PriorityQueue<int[]> pque=new PriorityQueue<>(new Comparator<int[]>(){
                         public int compare(int[] a,int[] b)
                         {
-                            double x=Math.pow(a[0],2)+Math.pow(a[1],2);
-                            double y=Math.pow(b[0],2)+Math.pow(b[1],2);
+                            double x=a[0]*a[0]+a[1]*a[1];
+                            double y=b[0]*b[0]+b[1]*b[1];
                             
                             return (int)(x-y);
                         }
